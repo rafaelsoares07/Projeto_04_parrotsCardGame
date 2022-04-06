@@ -55,6 +55,9 @@ body{
 .flip{
     transform: rotateY(180deg);
 }
+.flip-fixed{
+    transform: rotateY(180deg);
+}
 
 .card-Front{
 transform: rotateY(180deg);

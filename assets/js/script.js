@@ -1,4 +1,16 @@
-let numParrots = parseInt(prompt('Digite o número de cartas entre (4---14)')) / 2//Limita o for e adiciona apenas os pares pedidos pelo usuario 
+let contador = null
+let igualdade = false
+
+
+
+let numParrots = parseInt(prompt('Digite o número de cartas entre (4---14)')) / 2
+//Limita o for e adiciona apenas os pares pedidos pelo usuario (quando for numero impar ele força ser par)
+
+while (numParrots > 7 || numParrots < 2) {
+    numParrots = parseInt(prompt('Digite o número de cartas entre (4---14)')) / 2
+    //Validação para que o usuario nao coloque valores acima de 14 
+}
+
 
 let parrots = ['bobrossparrot',
     'explodyparrot',
@@ -9,12 +21,7 @@ let parrots = ['bobrossparrot',
     'unicornparrot']
 
 
-function start(){
-    createCardsParrots(parrots)
-}
-
 function createCardsParrots(parrots) {
-
 
     let cards = []
     for (let i = 0; i < numParrots; i++) {
@@ -82,10 +89,10 @@ function addCards(cartas) {
     //console.log(cartas.length)
 
     for (let card of cartas) {
-        document.querySelector('#gameBoard').innerHTML = 
-        document.querySelector('#gameBoard').innerHTML+
+        document.querySelector('#gameBoard').innerHTML =
+            document.querySelector('#gameBoard').innerHTML +
 
-`<div name="${card.name}" identificador="${card.id}" class="card flip" onclick="clickCard(this)">
+            `<div name="${card.name}" identificador="${card.id}" class="card" onclick="clickCard(this)">
         <div class="card-Front">
             <img src="assets/imagens/${card.name}.gif" alt="">
         </div>
@@ -99,3 +106,46 @@ function addCards(cartas) {
 
 
 // name iguais  e ids diferentes para achar o par
+
+
+function clickCard(element) {
+    element.classList.add('flip')
+    contador++
+
+    if (contador == 2) {
+        
+        verificarIgualdade()
+
+        if (igualdade == false) {
+            setTimeout(() => {
+                document.querySelectorAll('.flip').forEach(el => {
+                    el.classList.remove('flip')
+                    contador=0
+                })
+            }, 1000);
+        }else{
+            document.querySelectorAll('.flip').forEach(el => {
+                el.classList.remove('flip')
+                el.classList.add('flip-fixed')
+                contador=0
+            })
+            igualdade = false
+            contador = 0
+        }
+    }
+}
+
+function verificarIgualdade(){
+        let verificarSeIgual= document.querySelectorAll('.flip')
+        let att1 = verificarSeIgual[0].getAttribute('name')
+        let att2 = verificarSeIgual[1].getAttribute('name')
+
+        if(att1 == att2){
+            igualdade = true
+        }
+        else{
+            igualdade =false
+        }
+}
+
+
