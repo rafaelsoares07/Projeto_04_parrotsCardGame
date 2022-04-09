@@ -7,16 +7,15 @@ body{
 #container{
     width: 900px;
     margin: 0 auto;
-    border: 1px solid red;
     text-align: center;
     color: #75B79E;
     font-family: 'Roboto', sans-serif;
     font-size: 20px;
 }
 
-
 #gameBoard{
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
 }
 .card{
@@ -59,6 +58,7 @@ body{
     transform: rotateY(180deg);
 }
 
+
 .card-Front{
 transform: rotateY(180deg);
 z-index: 1;
@@ -72,3 +72,8 @@ z-index: 1;
 }
 
 
+@media (max-width:900px){
+    #container{
+        width: 95vw;
+    }
+}
