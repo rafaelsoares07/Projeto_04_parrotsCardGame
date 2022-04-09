@@ -3,6 +3,7 @@ let igualdade = false
 let numJogadas = 0;
 let contagem = 0;
 let seg;
+let start = false
 
 
 
@@ -13,6 +14,7 @@ while (numParrots > 7 || numParrots < 2) {
     numParrots = parseInt(prompt('Digite o número de cartas entre (4---14)')) / 2
     //Validação para que o usuario nao coloque valores acima de 14 
 }
+
 
 let parrots = ['bobrossparrot',
     'explodyparrot',
@@ -86,7 +88,6 @@ function shuffleCards(cartas, tam) {
 
 }
 
-
 function addCards(cartas) {
     //console.log(cartas.length)
 
@@ -105,47 +106,47 @@ function addCards(cartas) {
     }
 }
 
-
+timer()
 
 // name iguais  e ids diferentes para achar o par
 
-
 function clickCard(element) {
+    //start = true
 
-    if(element.classList.contains("flip")){
-        
+    if (element.classList.contains("flip")) {
+
         console.log('clicou na mesma 2 vezes') //serve para corrigir bug de logica
     }
-    else{
-    console.log('clicou em uma que nao tem flip')
-    numJogadas++
-    element.classList.add('flip')
-    contador++
-    console.log(contador)
+    else {
+        console.log('clicou em uma que nao tem flip')
+        numJogadas++
+        element.classList.add('flip')
+        contador++
+        console.log(contador)
 
-    if (contador == 2) {
-        console.log('entrou')
-        verificarIgualdade()
+        if (contador == 2) {
 
-        if (igualdade == false) {
-            setTimeout(() => {
+            verificarIgualdade()
+
+            if (igualdade == false) {
+                setTimeout(() => {
+                    document.querySelectorAll('.flip').forEach(el => {
+                        el.classList.remove('flip')
+                        contador = 0
+                    })
+                }, 1000);
+            } else {
                 document.querySelectorAll('.flip').forEach(el => {
                     el.classList.remove('flip')
+                    el.classList.add('flip-fixed')
                     contador = 0
                 })
-            }, 1000);
-        } else {
-            document.querySelectorAll('.flip').forEach(el => {
-                el.classList.remove('flip')
-                el.classList.add('flip-fixed')
+                igualdade = false
                 contador = 0
-            })
-            igualdade = false
-            contador = 0
+            }
         }
-    }
 
-    verificarGameOver()
+        verificarGameOver()
     }
 }
 
@@ -169,27 +170,28 @@ function verificarGameOver() {
     let tamanho = document.querySelectorAll('.flip-fixed').length
     if (tamanho == (numParrots * 2)) {
         setTimeout(() => {
-           clearInterval(seg)
+            clearInterval(seg)
             alert(`Você ganhou em ${numJogadas} jogadas realizadas e ${contagem} segundos de jogo!`)
             let reload = prompt('Deseja jogar novamente: Digite "sim" ou "não"')
 
-            if(reload=='sim'){
+            if (reload == 'sim') {
                 location.reload()
             }
         }, 0);
-        
-        
+
+
     }
 }
 
+function timer() {
+    seg = setInterval(function tempoDecorrido() {
+        document.querySelector('.timer').innerHTML = `${contagem} segundos`
 
-function timer(){
-       seg = setInterval(function tempoDecorrido(){
-            document.querySelector('.timer').innerHTML = `${contagem} segundos`
-    
-            contagem++
-        },1000)
-    
+        contagem++
+    }, 1000)
+
 }
 
-timer()
+
+
+
